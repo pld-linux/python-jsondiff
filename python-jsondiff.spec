@@ -1,19 +1,19 @@
 #
 # Conditional build:
-%bcond_without	tests	# unit tests
+%bcond_with	tests	# unit tests (not included in sdist)
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
 
 Summary:	Diff JSON and JSON-like structures in Python
 Summary(pl.UTF-8):	Porównywanie JSON-a i struktur w stylu JSON-a w Pythonie
 Name:		python-jsondiff
-Version:	1.2.0
-Release:	5
+Version:	2.0.0
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/jsondiff/
 Source0:	https://files.pythonhosted.org/packages/source/j/jsondiff/jsondiff-%{version}.tar.gz
-# Source0-md5:	d48297d9253356b7f71e38268e7e0d10
+# Source0-md5:	aefe6e44567aeb4c88982498c0f1c61f
 URL:		https://pypi.org/project/jsondiff/
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.7
@@ -79,9 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %py_install
 
-for bin in jdiff jsondiff ; do
-	%{__mv} $RPM_BUILD_ROOT%{_bindir}/${bin} $RPM_BUILD_ROOT%{_bindir}/${bin}-2
-done
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/jdiff $RPM_BUILD_ROOT%{_bindir}/jdiff-2
 
 %py_postclean
 %endif
@@ -89,10 +87,8 @@ done
 %if %{with python3}
 %py3_install
 
-for bin in jdiff jsondiff ; do
-	%{__mv} $RPM_BUILD_ROOT%{_bindir}/${bin} $RPM_BUILD_ROOT%{_bindir}/${bin}-3
-	ln -sf ${bin}-3 $RPM_BUILD_ROOT%{_bindir}/${bin}
-done
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/jdiff $RPM_BUILD_ROOT%{_bindir}/jdiff-3
+ln -sf jdiff-3 $RPM_BUILD_ROOT%{_bindir}/jdiff
 %endif
 
 %clean
@@ -103,7 +99,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc LICENSE README.rst
 %attr(755,root,root) %{_bindir}/jdiff-2
-%attr(755,root,root) %{_bindir}/jsondiff-2
 %{py_sitescriptdir}/jsondiff
 %{py_sitescriptdir}/jsondiff-%{version}-py*.egg-info
 %endif
@@ -114,8 +109,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc LICENSE README.rst
 %attr(755,root,root) %{_bindir}/jdiff
 %attr(755,root,root) %{_bindir}/jdiff-3
-%attr(755,root,root) %{_bindir}/jsondiff
-%attr(755,root,root) %{_bindir}/jsondiff-3
 %{py3_sitescriptdir}/jsondiff
 %{py3_sitescriptdir}/jsondiff-%{version}-py*.egg-info
 %endif
