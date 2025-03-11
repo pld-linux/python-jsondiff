@@ -8,7 +8,7 @@ Summary:	Diff JSON and JSON-like structures in Python
 Summary(pl.UTF-8):	Porównywanie JSON-a i struktur w stylu JSON-a w Pythonie
 Name:		python-jsondiff
 Version:	2.0.0
-Release:	2
+Release:	3
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/jsondiff/
